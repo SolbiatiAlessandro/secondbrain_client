@@ -46,7 +46,6 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-		//@ts-ignore
 		this.graph =  Graph.getInstance(loadGraph());
     this.populateGraph();
 		console.log(this.graph)
@@ -71,22 +70,18 @@ export class MainScene extends Phaser.Scene {
 
   populateGraph() {
     const nodeBuilder = new NodeBuilder(this);
-		//@ts-ignore
-		this.graph.forEachNode((nodeKey, attrs) => {
+		this.graph.forEachNode((node, attrs) => {
 			if(attrs.nodetype == "CURATED_NOTE"){
-				const _node = nodeBuilder.build(nodeKey, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
+				nodeBuilder.build(node, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
 			}
 		});
 
-		/*
     const edgeBuilder = new EdgeBuilder(this);
-    edgeBuilder.build(node1, node2);
-    edgeBuilder.build(node2, node4);
-    edgeBuilder.build(node4, node5);
-    edgeBuilder.build(node2, node5);
-    edgeBuilder.build(node4, node6);
-    edgeBuilder.build(node5, node7);
-	 */
+		this.graph.forEachEdge((edge, attrs, source, target, sourceAttrs, targetAttrs) => {
+			if(sourceAttrs.nodetype == "CURATED_NOTE" && targetAttrs.nodetype == "CURATED_NOTE"){
+				edgeBuilder.build(edge, sourceAttrs[this.graph.NODE], targetAttrs[this.graph.NODE]);
+			}
+		});
   }
 
   update(): void {

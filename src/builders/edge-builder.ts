@@ -67,10 +67,10 @@ export class EdgeBuilder {
     return gameObjects;
   }
 
-  build(firstNode: Node, secondNode: Node) {
+  build(name: string, firstNode: Node, secondNode: Node) {
     const gameObjects = this.buildGameObjects();
     const geometries = this.buildGeometries(firstNode, secondNode);
-    const edge = new Edge(firstNode, secondNode, gameObjects, geometries);
+    const edge = new Edge(name, firstNode, secondNode, gameObjects, geometries);
     this.graph.addEdge(edge);
     Object.entries(geometries).forEach(
       ([key, geometry]) => (geometry.graphParentElement = edge)

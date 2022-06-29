@@ -18,8 +18,8 @@ import { Event, GraphEvent, Events } from "../events";
 export class Graph extends GraphologyGraph {
   private static instance: Graph;
 
-  private readonly NODE: string = "_node";
-  private readonly EDGE: string = "_edge";
+  public readonly NODE: string = "_node";
+  public readonly EDGE: string = "_edge";
 
   public graphSelectionState = new GraphSelectionState();
 
@@ -50,20 +50,15 @@ export class Graph extends GraphologyGraph {
   addEdge(edge: Edge): string {
     let attr: any = {};
     attr[this.EDGE] = edge;
-    super.addEdgeWithKey(
-      edge.name,
-      edge.firstNode.name,
-      edge.secondNode.name,
-      attr
-    );
+		super.mergeEdgeAttributes(edge.name, attr);
     return edge.name;
   }
 
-  get allEdges() {
-    return super.mapEdges((_: string, attr: any) => attr[this.EDGE]);
+  get allEdges(): Array<Edge> {
+    return super.mapEdges((_: string, attr: any) => attr[this.EDGE]).filter(edge => edge);
   }
 
-  get allNodes() {
+  get allNodes(): Array<Node> {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
   }
 

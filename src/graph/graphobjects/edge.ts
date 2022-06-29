@@ -13,7 +13,6 @@ import { GraphSelectableObject } from "../../graph/graphobjects/graph-selectable
 import { GraphEvent, Event, Events } from "../../events";
 
 export class Edge extends GraphSelectableObject {
-  public name: string;
   readonly SELECTION_EVENTS: Array<Event> = [
     Events.EDGE_DESELECTED,
     Events.EDGE_SELECTED,
@@ -21,13 +20,13 @@ export class Edge extends GraphSelectableObject {
   graph: Graph = Graph.getInstance();
 
   constructor(
+		public name: string,
     public firstNode: Node,
     public secondNode: Node,
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {
     super();
-    this.name = firstNode.name + "-" + secondNode.name;
   }
 
   neighbouringNodes(): [Node, Node] {
