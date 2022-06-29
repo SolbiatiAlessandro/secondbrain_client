@@ -72,7 +72,7 @@ export class MainScene extends Phaser.Scene {
     const nodeBuilder = new NodeBuilder(this);
 		this.graph.forEachNode((node, attrs) => {
 			if(attrs.nodetype == "CURATED_NOTE"){
-				nodeBuilder.build(node, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
+				nodeBuilder.build(node, Math.floor(Math.random() * 1100), Math.floor(Math.random() * 600), attrs.label);
 			}
 		});
 
