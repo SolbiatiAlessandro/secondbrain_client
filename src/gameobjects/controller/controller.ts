@@ -18,6 +18,12 @@ export class Controller
   leftControllerHandle: ControllerHandle;
   line: ControllerLine;
 
+	constructor(
+		public scene: any,
+		public label: string){
+			super(scene);
+		}
+
   valid: boolean = true;
 
   depth: number = 5;
@@ -59,8 +65,10 @@ export class Controller
       this.pointCenter.y + this.imageOffsetY,
       "controlPointCenter"
     );
+		const text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.label, null);
+		this.add(text, true);
     this.setDepth(this.depth);
-    this.setVisible(false);
+    this.setVisible(true);
   }
 
   onDrag(
