@@ -18,12 +18,15 @@ function getServerPortValue(): string{
 	return params['server'] ? params['server'] : "8080";
 }
 
-function loadGraph(): any{
+/* 
+ * SYNC ajax call to
+ * https://solbiatialessandro.github.io/secondbrain_server/#api-Graph-LoadGraph
+*/
+function loadGraph(): GraphologyGraph{
 	// @ts-ignore
 	const port = getServerPortValue();
 	var graph: any;
 	jQuery.ajax( {
-		 // https://solbiatialessandro.github.io/secondbrain_server/#api-Graph-LoadGraph
 		'url': `http://localhost:${port}/load-graph`,
 		'async': false,
 		'success': function(graphData: any){
@@ -36,14 +39,17 @@ function loadGraph(): any{
 
 
 export class MainScene extends Phaser.Scene {
-  graph: Graph = Graph.getInstance();
+  graph: Graph;
 
   constructor() {
     super({ key: "MainScene" });
   }
 
   create(): void {
-    this.createGraph(loadGraph());
+		//@ts-ignore
+		this.graph =  Graph.getInstance(loadGraph());
+    this.populateGraph();
+		console.log(this.graph)
     this.input.on(
       "drag",
       function (pointer: any, gameObject: any, x: number, y: number) {
@@ -63,17 +69,16 @@ export class MainScene extends Phaser.Scene {
     );
   }
 
-  createGraph(graphData: any) {
-		console.log(graphData);
+  populateGraph() {
     const nodeBuilder = new NodeBuilder(this);
-    const node1 = nodeBuilder.build(100, 50);
-    const node2 = nodeBuilder.build(300, 150);
-    const node3 = nodeBuilder.build(500, 300);
-    const node4 = nodeBuilder.build(600, 200);
-    const node5 = nodeBuilder.build(550, 450);
-    const node6 = nodeBuilder.build(900, 400);
-    const node7 = nodeBuilder.build(850, 550);
+		//@ts-ignore
+		this.graph.forEachNode((nodeKey, attrs) => {
+			if(attrs.nodetype == "CURATED_NOTE"){
+				const _node = nodeBuilder.build(nodeKey, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
+			}
+		});
 
+		/*
     const edgeBuilder = new EdgeBuilder(this);
     edgeBuilder.build(node1, node2);
     edgeBuilder.build(node2, node4);
@@ -81,6 +86,7 @@ export class MainScene extends Phaser.Scene {
     edgeBuilder.build(node2, node5);
     edgeBuilder.build(node4, node6);
     edgeBuilder.build(node5, node7);
+	 */
   }
 
   update(): void {

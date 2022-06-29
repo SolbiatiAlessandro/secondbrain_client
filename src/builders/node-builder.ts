@@ -5,6 +5,7 @@ import {
   GeometryOnGraph,
   GameObjectOnGraph,
 } from "../interfaces/graph.interface";
+//@ts-ignore
 
 import { Point } from "../geometry/point";
 
@@ -62,9 +63,8 @@ export class NodeBuilder {
     return gameObjects;
   }
 
-  build(x: number, y: number): Node {
+  build(name:string, x: number, y: number): Node {
     // @ts-ignore
-    const name: string = this.graph.order;
     const geometries = this.buildGeometries(x, y);
     const gameObjects = this.buildGameObjects();
 
