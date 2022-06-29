@@ -6,6 +6,35 @@ import { Edge } from "../graph/graphobjects/edge";
 import { Node } from "../graph/graphobjects/node";
 import { Events } from "../events";
 
+import * as gexf from 'graphology-gexf';
+import GraphologyGraph from 'graphology';
+//@ts-ignore
+import * as jQuery from "jquery";
+
+function getServerPortValue(): string{
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	//@ts-ignore
+	const params = Object.fromEntries(urlSearchParams.entries());
+	return params['server'] ? params['server'] : "8080";
+}
+
+function loadGraph(): any{
+	// @ts-ignore
+	const port = getServerPortValue();
+	var graph: any;
+	jQuery.ajax( {
+		 // https://solbiatialessandro.github.io/secondbrain_server/#api-Graph-LoadGraph
+		'url': `http://localhost:${port}/load-graph`,
+		'async': false,
+		'success': function(graphData: any){
+				const _graph =  gexf.parse(GraphologyGraph, graphData.graph);
+				graph = _graph;
+		}
+	});
+	return graph;
+}
+
+
 export class MainScene extends Phaser.Scene {
   graph: Graph = Graph.getInstance();
 
@@ -14,7 +43,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.createGraph();
+    this.createGraph(loadGraph());
     this.input.on(
       "drag",
       function (pointer: any, gameObject: any, x: number, y: number) {
@@ -34,7 +63,8 @@ export class MainScene extends Phaser.Scene {
     );
   }
 
-  createGraph() {
+  createGraph(graphData: any) {
+		console.log(graphData);
     const nodeBuilder = new NodeBuilder(this);
     const node1 = nodeBuilder.build(100, 50);
     const node2 = nodeBuilder.build(300, 150);
