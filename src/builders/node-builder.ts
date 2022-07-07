@@ -57,16 +57,16 @@ export class NodeBuilder {
     return geometries;
   }
 
-  buildGameObjects(): Record<string, GameObjectOnGraph> {
+  buildGameObjects(name: string): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
-    gameObjects[NodeGameObjects.CONTROLLER] = new Controller(this.scene);
+    gameObjects[NodeGameObjects.CONTROLLER] = new Controller(this.scene, name);
     return gameObjects;
   }
 
-  build(name:string, x: number, y: number): Node {
+  build(name:string, x: number, y: number, label: string): Node {
     // @ts-ignore
     const geometries = this.buildGeometries(x, y);
-    const gameObjects = this.buildGameObjects();
+    const gameObjects = this.buildGameObjects(label);
 
     const node = new Node(name, gameObjects, geometries);
     this.graph.addNode(node);
