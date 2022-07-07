@@ -11,18 +11,28 @@ import { GraphSelectableObject } from "../../graph/graphobjects/graph-selectable
 
 import { Event, GraphEvent, Events } from "../../events";
 
+export interface NodeAttributes {
+	name: string,
+	x: number,
+	y: number,
+	size: number
+}
+
 export class Node extends GraphSelectableObject {
   graph: Graph = Graph.getInstance();
+	public name: string;
+
   readonly SELECTION_EVENTS: Array<Event> = [
     Events.NODE_SELECTED,
     Events.NODE_DESELECTED,
   ];
 
   constructor(
-    public name: string,
+    nodeAttributes: NodeAttributes,
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {
     super();
+		this.name = nodeAttributes.name; 
   }
 }

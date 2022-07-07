@@ -1,4 +1,4 @@
-import { Node } from "../graph/graphobjects/node";
+import { Node, NodeAttributes } from "../graph/graphobjects/node";
 import { Graph } from "../graph/graph";
 
 import {
@@ -62,13 +62,12 @@ export class NodeBuilder {
     return gameObjects;
   }
 
-  build(x: number, y: number): Node {
+  build(nodeAttributes: NodeAttributes): Node {
     // @ts-ignore
-    const name: string = this.graph.order;
-    const geometries = this.buildGeometries(x, y);
+    const geometries = this.buildGeometries(nodeAttributes.x, nodeAttributes.y);
     const gameObjects = this.buildGameObjects();
 
-    const node = new Node(name, gameObjects, geometries);
+    const node = new Node(nodeAttributes, gameObjects, geometries);
     this.graph.addNode(node);
     Object.entries(geometries).forEach(
       ([key, geometry]) => (geometry.graphParentElement = node)

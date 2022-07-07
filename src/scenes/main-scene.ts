@@ -38,8 +38,14 @@ export class MainScene extends Phaser.Scene {
   buildGraph() {
 		const nodeBuilder = new NodeBuilder(this);
 		this.graph.forEachNode((node, attrs) => {
+			console.log(node, attrs);
 			if(attrs.nodetype == "CURATED_NOTE"){
-				nodeBuilder.build(node, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
+				nodeBuilder.build({
+					name: node, 
+					x: Math.floor(Math.random() * 1000), 
+					y: Math.floor(Math.random() * 1000),
+					size: 10
+				});
 			}
 		});
 
