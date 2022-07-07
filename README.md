@@ -1,6 +1,10 @@
-# SecondBrain v3 Client
+# SecondBrain v2 Client
 
 repurposed [old game repo](https://github.com/SolbiatiAlessandro/hacktorio) to be client of second brain
+
+```
+yarn dev
+```
 
 ---
 
