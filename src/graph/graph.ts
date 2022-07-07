@@ -18,8 +18,8 @@ import { Event, GraphEvent, Events } from "../events";
 export class Graph extends GraphologyGraph {
   private static instance: Graph;
 
-  private readonly NODE: string = "_node";
-  private readonly EDGE: string = "_edge";
+  public readonly NODE: string = "_node";
+  public readonly EDGE: string = "_edge";
 
   public graphSelectionState = new GraphSelectionState();
 

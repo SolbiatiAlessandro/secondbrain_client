@@ -14,7 +14,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
-    this.createGraph();
+    this.buildGraph();
     this.input.on(
       "drag",
       function (pointer: any, gameObject: any, x: number, y: number) {
@@ -34,23 +34,25 @@ export class MainScene extends Phaser.Scene {
     );
   }
 
-  createGraph() {
-    const nodeBuilder = new NodeBuilder(this);
-    const node1 = nodeBuilder.build(100, 50);
-    const node2 = nodeBuilder.build(300, 150);
-    const node3 = nodeBuilder.build(500, 300);
-    const node4 = nodeBuilder.build(600, 200);
-    const node5 = nodeBuilder.build(550, 450);
-    const node6 = nodeBuilder.build(900, 400);
-    const node7 = nodeBuilder.build(850, 550);
+	// build graph objects from data loaded in graph
+  buildGraph() {
+		const nodeBuilder = new NodeBuilder(this);
+		this.graph.forEachNode((node, attrs) => {
+			if(attrs.nodetype == "CURATED_NOTE"){
+				nodeBuilder.build(node, Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000));
+			}
+		});
 
-    const edgeBuilder = new EdgeBuilder(this);
-    edgeBuilder.build(node1, node2);
-    edgeBuilder.build(node2, node4);
-    edgeBuilder.build(node4, node5);
-    edgeBuilder.build(node2, node5);
-    edgeBuilder.build(node4, node6);
-    edgeBuilder.build(node5, node7);
+		const edgeBuilder = new EdgeBuilder(this);
+		this.graph.forEachEdge((edge, attrs, source, target, sourceAttrs, targetAttrs) => {
+			if(sourceAttrs.nodetype == "CURATED_NOTE" && targetAttrs.nodetype == "CURATED_NOTE"){
+				edgeBuilder.build({
+					name: edge, 
+					firstNode: sourceAttrs[this.graph.NODE], 
+					secondNode: targetAttrs[this.graph.NODE]
+				});
+			}
+		});
   }
 
   update(): void {

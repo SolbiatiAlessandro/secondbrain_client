@@ -1,4 +1,4 @@
-import { Edge } from "../graph/graphobjects/edge";
+import { Edge, EdgeAttributes } from "../graph/graphobjects/edge";
 import { Node } from "../graph/graphobjects/node";
 import { Graph } from "../graph/graph";
 
@@ -67,10 +67,10 @@ export class EdgeBuilder {
     return gameObjects;
   }
 
-  build(firstNode: Node, secondNode: Node) {
+  build(edgeAttributes: EdgeAttributes) {
     const gameObjects = this.buildGameObjects();
-    const geometries = this.buildGeometries(firstNode, secondNode);
-    const edge = new Edge(firstNode, secondNode, gameObjects, geometries);
+    const geometries = this.buildGeometries(edgeAttributes.firstNode, edgeAttributes.secondNode);
+    const edge = new Edge(edgeAttributes, gameObjects, geometries);
     this.graph.addEdge(edge);
     Object.entries(geometries).forEach(
       ([key, geometry]) => (geometry.graphParentElement = edge)
