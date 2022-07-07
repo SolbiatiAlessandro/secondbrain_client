@@ -32,6 +32,14 @@ export class MainScene extends Phaser.Scene {
         }
       }.bind(this)
     );
+
+		// camera pan
+		const camera = this.cameras.main;
+		this.input.on("pointermove", function (pointer: any) {
+			if (!pointer.isDown) return;
+			camera.scrollX -= (pointer.x - pointer.prevPosition.x) / camera.zoom;
+			camera.scrollY -= (pointer.y - pointer.prevPosition.y) / camera.zoom;
+		});
   }
 
 	// build graph objects from data loaded in graph
@@ -42,9 +50,9 @@ export class MainScene extends Phaser.Scene {
 			if(attrs.nodetype == "CURATED_NOTE"){
 				nodeBuilder.build({
 					name: node, 
-					x: Math.floor(Math.random() * 1000), 
-					y: Math.floor(Math.random() * 1000),
-					size: 10,
+					x: attrs.x * 10,
+					y: attrs.y * 10,
+					size: attrs.size,
 					title: attrs.title,
 					fullpath: attrs.fullpath
 				});

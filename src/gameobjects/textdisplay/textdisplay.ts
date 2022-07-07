@@ -37,12 +37,13 @@ export class TextDisplay
 	constructor(
 		public scene: MainScene,
 		public title: string,
+		public size: number
 	){
 		super(scene);
 	}
 
   populate() {
-		const text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, null);
+		const text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() });
 		this.add(text, true);
     this.setDepth(this.depth);
     this.setVisible(true);
