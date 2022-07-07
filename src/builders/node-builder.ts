@@ -13,6 +13,7 @@ import { GeometryBuilder } from "../builders/geometry-builder";
 import { MainScene } from "../scenes/main-scene";
 
 import { Controller } from "../gameobjects/controller/controller";
+import { TextDisplay } from "../gameobjects/textdisplay/textdisplay";
 
 export enum NodeGeometries {
   POINT__CENTER,
@@ -24,6 +25,7 @@ export enum NodeGeometries {
 
 export enum NodeGameObjects {
   CONTROLLER,
+	TEXTDISPLAY
 }
 
 export class NodeBuilder {
@@ -34,38 +36,39 @@ export class NodeBuilder {
 
   constructor(public scene: MainScene) {}
 
-  buildGeometries(x: number, y: number): Record<string, GeometryOnGraph> {
+  buildGeometries(nodeAttributes: NodeAttributes): Record<string, GeometryOnGraph> {
     const geometries: Record<string, GeometryOnGraph> = {};
-    geometries[NodeGeometries.POINT__CENTER] = new Point(x, y);
+    geometries[NodeGeometries.POINT__CENTER] = new Point(nodeAttributes.x, nodeAttributes.y);
     geometries[NodeGeometries.POINT__LEFT_HANDLE] = new Point(
-      x - this.HANDLE_OFFSET,
-      y - this.HANDLE_OFFSET
+      nodeAttributes.x - this.HANDLE_OFFSET,
+      nodeAttributes.y - this.HANDLE_OFFSET
     );
     geometries[NodeGeometries.POINT__RIGHT_HANDLE] = new Point(
-      x + this.HANDLE_OFFSET,
-      y + this.HANDLE_OFFSET
+      nodeAttributes.x + this.HANDLE_OFFSET,
+      nodeAttributes.y + this.HANDLE_OFFSET
     );
     geometries[NodeGeometries.POINT__LEFT_HANDLE_TEST] = new Point(
-      x - this.HANDLE_OFFSET,
-      y - this.HANDLE_OFFSET
+      nodeAttributes.x - this.HANDLE_OFFSET,
+      nodeAttributes.y - this.HANDLE_OFFSET
     );
     geometries[NodeGeometries.POINT__RIGHT_HANDLE_TEST] = new Point(
-      x + this.HANDLE_OFFSET,
-      y + this.HANDLE_OFFSET
+      nodeAttributes.x + this.HANDLE_OFFSET,
+      nodeAttributes.y + this.HANDLE_OFFSET
     );
     return geometries;
   }
 
-  buildGameObjects(): Record<string, GameObjectOnGraph> {
+  buildGameObjects(nodeAttributes: NodeAttributes): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
     gameObjects[NodeGameObjects.CONTROLLER] = new Controller(this.scene);
+    gameObjects[NodeGameObjects.TEXTDISPLAY] = new TextDisplay(this.scene, nodeAttributes.title);
     return gameObjects;
   }
 
   build(nodeAttributes: NodeAttributes): Node {
     // @ts-ignore
-    const geometries = this.buildGeometries(nodeAttributes.x, nodeAttributes.y);
-    const gameObjects = this.buildGameObjects();
+    const geometries = this.buildGeometries(nodeAttributes);
+    const gameObjects = this.buildGameObjects(nodeAttributes);
 
     const node = new Node(nodeAttributes, gameObjects, geometries);
     this.graph.addNode(node);

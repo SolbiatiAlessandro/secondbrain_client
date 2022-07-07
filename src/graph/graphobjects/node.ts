@@ -15,7 +15,9 @@ export interface NodeAttributes {
 	name: string,
 	x: number,
 	y: number,
-	size: number
+	size: number,
+	title: string,
+	fullpath: string
 }
 
 export class Node extends GraphSelectableObject {

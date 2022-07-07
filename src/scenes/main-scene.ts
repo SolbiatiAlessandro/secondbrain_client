@@ -44,7 +44,9 @@ export class MainScene extends Phaser.Scene {
 					name: node, 
 					x: Math.floor(Math.random() * 1000), 
 					y: Math.floor(Math.random() * 1000),
-					size: 10
+					size: 10,
+					title: attrs.title,
+					fullpath: attrs.fullpath
 				});
 			}
 		});
