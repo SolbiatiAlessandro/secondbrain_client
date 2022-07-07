@@ -33,38 +33,37 @@ export class Graph extends GraphologyGraph {
 
 	constructor(graphologyGraph: GraphologyGraph){
 		super();
-		graphologyGraph.forEachNode((node, attrs) => {
-			super.addNode(node, attrs);
-		});
-		graphologyGraph.forEachEdge((edge, attributes, source, target) => {
-			super.addEdgeWithKey(edge, source, target, attributes);
-		});
+		if (graphologyGraph){
+			graphologyGraph.forEachNode((node, attrs) => {
+				super.addNode(node, attrs);
+			});
+			graphologyGraph.forEachEdge((edge, attributes, source, target) => {
+				super.addEdgeWithKey(edge, source, target, attributes);
+			});
+		} else {
+			alert("Warning: failed loading graph from backend!");
+		}
 	}
 
   addNode(node: Node): string {
     let attr: any = {};
     attr[this.NODE] = node;
-    super.addNode(node.name, attr);
+		super.mergeNodeAttributes(node.name, attr);
     return node.name;
   }
 
   addEdge(edge: Edge): string {
     let attr: any = {};
     attr[this.EDGE] = edge;
-    super.addEdgeWithKey(
-      edge.name,
-      edge.firstNode.name,
-      edge.secondNode.name,
-      attr
-    );
+		super.mergeEdgeAttributes(edge.name, attr);
     return edge.name;
   }
 
-  get allEdges() {
-    return super.mapEdges((_: string, attr: any) => attr[this.EDGE]);
+  get allEdges(): Array<Edge> {
+    return super.mapEdges((_: string, attr: any) => attr[this.EDGE]).filter(edge => edge);;
   }
 
-  get allNodes() {
+  get allNodes(): Array<Node> {
     return super.mapNodes((_: string, attr: any) => attr[this.NODE]);
   }
 

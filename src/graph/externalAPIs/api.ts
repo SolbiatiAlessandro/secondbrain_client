@@ -10,12 +10,13 @@ import * as jQuery from "jquery";
 */
 export function loadGraph(): GraphologyGraph{
 	// @ts-ignore
-	const port = getServerPortValue();
 	var graph: any;
 	jQuery.ajax( {
 		'url': `http://localhost:8080/load-graph`,
 		'async': false,
 		'success': function(graphData: any){
+				console.log("http://localhost:8080/load-graph SUCCESS");
+				console.log(graphData);
 				const _graph =  gexf.parse(GraphologyGraph, graphData.graph);
 				graph = _graph;
 		}
