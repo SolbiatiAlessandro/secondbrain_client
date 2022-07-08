@@ -9,11 +9,28 @@ import { ControllerHandle } from "../../gameobjects/controller/gameobjects/contr
 import { ControllerLine } from "../../gameobjects/controller/gameobjects/controller-line";
 import { GameObjectWithControllerTypes } from "../../gameobjects/controller/controller-types";
 
+class ControllerCenter extends Phaser.GameObjects.Sprite {
+	constructor(
+    scene: Phaser.Scene,
+		public point: Point
+	){
+    super(scene, point.x, point.y, "controlPointCenter");
+    this.setInteractive({ draggable: true });
+	}
+
+	onDrag(x: number, y: number){
+		this.point.x = x;
+		this.point.y = y;
+		this.x = x;
+		this.y = y;
+	}
+}
+
 export class Controller
   extends GameObjectWithControllerTypes
   implements GameObjectOnGraph
 {
-  controllerCenter: Phaser.GameObjects.Sprite;
+  controllerCenter: ControllerCenter;
   rightControllerHandle: ControllerHandle;
   leftControllerHandle: ControllerHandle;
   line: ControllerLine;
@@ -30,7 +47,7 @@ export class Controller
       this.scene,
       this.pointRightTest,
       this.pointRightRender,
-      this.onDrag("rightControllerHandle", "leftControllerHandle"),
+      this.onHandleDrag("rightControllerHandle", "leftControllerHandle"),
       this.imageOffsetY,
       this.pointerdown.bind(this)
     );
@@ -39,7 +56,7 @@ export class Controller
       this.scene,
       this.pointLeftTest,
       this.pointLeftRender,
-      this.onDrag("leftControllerHandle", "rightControllerHandle"),
+      this.onHandleDrag("leftControllerHandle", "rightControllerHandle"),
       this.imageOffsetY,
       this.pointerdown.bind(this)
     );
@@ -54,21 +71,24 @@ export class Controller
       this.rightControllerHandle
     );
     this.add(this.line, true);
-    this.controllerCenter = this.create(
-      this.pointCenter.x,
-      this.pointCenter.y + this.imageOffsetY,
-      "controlPointCenter"
-    );
+    this.controllerCenter = new ControllerCenter(this.scene, this.pointCenter);
+		this.add(this.controllerCenter, true);
     this.setDepth(this.depth);
 		this._setVisible(false);
   }
+
+	// dragging this.controllerCenter
+	onDrag(x: number, y: number){
+		this.controllerCenter.x = x;
+		this.controllerCenter.y = y;
+	}
 
 	_setVisible(value: boolean){
     this.setVisible(value);
 		this.controllerCenter.setVisible(true);
 	}
 
-  onDrag(
+  onHandleDrag(
     handle: "rightControllerHandle" | "leftControllerHandle",
     otherControllerHandle: "rightControllerHandle" | "leftControllerHandle"
   ): (x: number, y: number) => void {
