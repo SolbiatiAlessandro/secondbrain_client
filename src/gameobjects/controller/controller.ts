@@ -88,6 +88,7 @@ export class Controller
 				this.graphParentNode.nodeAttributes.y = y;
 			},
 			() => {
+				navigator.clipboard.writeText(this.graphParentNode.nodeAttributes.fullpath);
 				this.graphParentNode.save();
 			},
 		);
