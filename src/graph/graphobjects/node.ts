@@ -11,6 +11,8 @@ import { GraphSelectableObject } from "../../graph/graphobjects/graph-selectable
 
 import { Event, GraphEvent, Events } from "../../events";
 
+import { updateNodeAttributes } from "../../graph/externalAPIs/api";
+
 export interface NodeAttributes {
 	name: string,
 	x: number,
@@ -37,4 +39,8 @@ export class Node extends GraphSelectableObject {
     super();
 		this.name = nodeAttributes.name; 
   }
+
+	save(){
+		updateNodeAttributes(this.name, this.nodeAttributes.x, this.nodeAttributes.y);
+	}
 }

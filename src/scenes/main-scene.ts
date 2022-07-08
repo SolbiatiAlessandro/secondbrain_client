@@ -41,10 +41,11 @@ export class MainScene extends Phaser.Scene {
 		this.input.on(
 			"pointerup",
 			function(
-				pointer: any
+				pointer: any,
+        currentlyOver: Array<Phaser.GameObjects.GameObject>
 			){
-				this.graph.save();
-				console.log("pointerup");
+				// @ts-ignore
+				currentlyOver.forEach(gameObject => gameObject.pointerUp());
 		}.bind(this));
 	}
 

@@ -13,7 +13,8 @@ class ControllerCenter extends Phaser.GameObjects.Sprite {
 	constructor(
     scene: Phaser.Scene,
 		public point: Point,
-		public onDragCallback: (x: number, y: number) => void
+		public onDragCallback: (x: number, y: number) => void,
+		public pointerUpCallback: () => void
 	){
     super(scene, point.x, point.y, "controlPointCenter");
     this.setInteractive({ draggable: true });
@@ -25,6 +26,11 @@ class ControllerCenter extends Phaser.GameObjects.Sprite {
 		this.x = x;
 		this.y = y;
 		this.onDragCallback(x, y);
+	}
+
+	pointerUp(){
+		console.log(this.x, this.y);
+		this.pointerUpCallback();
 	}
 }
 
@@ -73,10 +79,15 @@ export class Controller
       this.rightControllerHandle
     );
     this.add(this.line, true);
-    this.controllerCenter = new ControllerCenter(this.scene, this.pointCenter, (x: number, y: number) => {
+    this.controllerCenter = new ControllerCenter(this.scene, this.pointCenter, 
+																								 (x: number, y: number) => {
 			this.graphParentNode.nodeAttributes.x = x;
 			this.graphParentNode.nodeAttributes.y = y;
-		});
+		},
+																								 () => {
+			this.graphParentNode.save();
+		},
+																								);
 		this.add(this.controllerCenter, true);
     this.setDepth(this.depth);
 		this._setVisible(false);
