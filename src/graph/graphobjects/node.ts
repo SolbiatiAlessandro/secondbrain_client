@@ -19,7 +19,8 @@ export interface NodeAttributes {
 	y: number,
 	size: number,
 	title: string,
-	fullpath: string
+	fullpath: string,
+	banana: boolean
 }
 
 export class Node extends GraphSelectableObject {

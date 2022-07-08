@@ -79,15 +79,18 @@ export class Controller
       this.rightControllerHandle
     );
     this.add(this.line, true);
-    this.controllerCenter = new ControllerCenter(this.scene, this.pointCenter, 
-																								 (x: number, y: number) => {
-			this.graphParentNode.nodeAttributes.x = x;
-			this.graphParentNode.nodeAttributes.y = y;
-		},
-																								 () => {
-			this.graphParentNode.save();
-		},
-																								);
+    this.controllerCenter = new ControllerCenter(
+			this.scene, 
+			this.pointCenter, 
+																								 
+			(x: number, y: number) => {
+				this.graphParentNode.nodeAttributes.x = x;
+				this.graphParentNode.nodeAttributes.y = y;
+			},
+			() => {
+				this.graphParentNode.save();
+			},
+		);
 		this.add(this.controllerCenter, true);
     this.setDepth(this.depth);
 		this._setVisible(false);

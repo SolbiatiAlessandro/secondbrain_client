@@ -61,7 +61,7 @@ export class NodeBuilder {
   buildGameObjects(nodeAttributes: NodeAttributes): Record<string, GameObjectOnGraph> {
     const gameObjects: Record<string, GameObjectOnGraph> = {};
     gameObjects[NodeGameObjects.CONTROLLER] = new Controller(this.scene);
-    gameObjects[NodeGameObjects.TEXTDISPLAY] = new TextDisplay(this.scene, nodeAttributes.title, nodeAttributes.size);
+    gameObjects[NodeGameObjects.TEXTDISPLAY] = new TextDisplay(this.scene, nodeAttributes.title, nodeAttributes.size, nodeAttributes.banana);
     return gameObjects;
   }
 

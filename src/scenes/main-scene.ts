@@ -89,7 +89,8 @@ export class MainScene extends Phaser.Scene {
 					y: attrs.y * Constants.GRAPH_XY_SCALING_FACTOR,
 					size: attrs.size,
 					title: attrs.title,
-					fullpath: attrs.fullpath
+					fullpath: attrs.fullpath,
+					banana: ('banana' in attrs) ? attrs.banana : false
 				});
 			}
 		});

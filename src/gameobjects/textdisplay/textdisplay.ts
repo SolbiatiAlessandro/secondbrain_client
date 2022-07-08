@@ -37,7 +37,8 @@ export class TextDisplay
 	constructor(
 		public scene: MainScene,
 		public title: string,
-		public size: number
+		public size: number,
+		public banana: boolean
 	){
 		super(scene);
 	}
@@ -46,8 +47,14 @@ export class TextDisplay
 		console.log(this.size);
 		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() + 'px', color: 'grey' });
 		this.add(this.text, true);
-    this.setDepth(this.depth);
+    this.setDepth(this.depth + 1);
     this.setVisible(true);
+		if (this.banana) {
+			const bananaSprite = new Phaser.GameObjects.Sprite(this.scene, this.pointCenter.x + 10, this.pointCenter.y + 10, 'banana');
+			bananaSprite.scale = 0.2;
+			bananaSprite.depth = this.depth;
+			this.add(bananaSprite, true);
+		}
   }
 
   onEvent(event: Events) {
