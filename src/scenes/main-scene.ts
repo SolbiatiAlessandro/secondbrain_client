@@ -38,6 +38,14 @@ export class MainScene extends Phaser.Scene {
         }
       }.bind(this)
     );
+		this.input.on(
+			"pointerup",
+			function(
+				pointer: any
+			){
+				this.graph.save();
+				console.log("pointerup");
+		}.bind(this));
 	}
 
 	setUpCamera(): void {

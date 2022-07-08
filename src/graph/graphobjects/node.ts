@@ -30,7 +30,7 @@ export class Node extends GraphSelectableObject {
   ];
 
   constructor(
-    nodeAttributes: NodeAttributes,
+    public nodeAttributes: NodeAttributes,
     public gameObjects: Record<string, GameObjectOnGraph>,
     public geometries: Record<string, GeometryOnGraph>
   ) {

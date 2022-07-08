@@ -3,6 +3,8 @@ import GraphologyGraph from 'graphology';
 //@ts-ignore
 import * as jQuery from "jquery";
 
+import { Node } from "../../graph/graphobjects/node";
+
 /* 
  * SYNC ajax call to
  * https://solbiatialessandro.github.io/secondbrain_server/#api-Graph-LoadGraph
@@ -22,4 +24,14 @@ export function loadGraph(): GraphologyGraph{
 		}
 	});
 	return graph;
+}
+
+export function updateNodeAttributes(node: string, x: number, y: number): void {
+	jQuery.ajax( {
+		'url': `http://localhost:8080/update-node-attributes?` + jQuery.param({node: node, x: x, y: y}),
+		'async': false,
+		'success': function(){
+			console.log("updateNodeAttributes SUCCESS");
+		}
+	});
 }

@@ -3,7 +3,7 @@ import GraphologyGraph from 'graphology';
 import { Node } from "../graph/graphobjects/node";
 import { Edge } from "../graph/graphobjects/edge";
 import { GraphObject } from "../graph/graphobjects/graph-object";
-import { loadGraph } from "../graph/externalAPIs/api";
+import { loadGraph, updateNodeAttributes } from "../graph/externalAPIs/api";
 
 import { GraphSelection, GraphSelectionState } from "../graph/graph-selection";
 import {
@@ -51,6 +51,10 @@ export class Graph extends GraphologyGraph {
 		super.mergeNodeAttributes(node.name, attr);
     return node.name;
   }
+
+	save(): void {
+		this.forEachNode((node, attrs) => updateNodeAttributes(node, attrs[this.NODE].nodeAttributes.x, attrs[this.NODE].nodeAttributes.y));
+	}
 
   addEdge(edge: Edge): string {
     let attr: any = {};
