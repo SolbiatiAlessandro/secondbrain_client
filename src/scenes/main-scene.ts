@@ -15,6 +15,11 @@ export class MainScene extends Phaser.Scene {
 
   create(): void {
     this.buildGraph();
+		this.setUpCamera();
+		this.setUpGameEvents();
+  }
+
+	setUpGameEvents(): void{
     this.input.on(
       "drag",
       function (pointer: any, gameObject: any, x: number, y: number) {
@@ -32,7 +37,9 @@ export class MainScene extends Phaser.Scene {
         }
       }.bind(this)
     );
+	}
 
+	setUpCamera(): void {
 		// camera pan
 		const camera = this.cameras.main;
 		this.input.on("pointermove", function (pointer: any) {
@@ -40,7 +47,24 @@ export class MainScene extends Phaser.Scene {
 			camera.scrollX -= (pointer.x - pointer.prevPosition.x) / camera.zoom;
 			camera.scrollY -= (pointer.y - pointer.prevPosition.y) / camera.zoom;
 		});
-  }
+
+		this.input.on("wheel",  (pointer: any, gameObjects: any, deltaX: any, deltaY: any, deltaZ: any) => {
+			if (deltaY > 0) {
+					var newZoom = camera.zoom -.1;
+					if (newZoom > 0.1) {
+							camera.zoom = newZoom;
+					}
+			}
+			if (deltaY < 0) {
+					var newZoom = camera.zoom +.1;
+					if (newZoom < 2) {
+							camera.zoom = newZoom;
+					}
+			}
+			// camera.centerOn(pointer.worldX, pointer.worldY);
+			// camera.pan(pointer.worldX, pointer.worldY, 2000, "Power2");
+		});
+	}
 
 	// build graph objects from data loaded in graph
   buildGraph() {
