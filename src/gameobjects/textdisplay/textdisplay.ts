@@ -28,7 +28,7 @@ export class TextDisplay
   extends GameObjectWithTextDisplayTypes
   implements GameObjectOnGraph
 {
-  valid: boolean = true;
+	text: Phaser.GameObjects.Text;
 
   depth: number = 5;
 
@@ -43,9 +43,23 @@ export class TextDisplay
 	}
 
   populate() {
-		const text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString(), color: 'grey' });
-		this.add(text, true);
+		console.log(this.size);
+		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() + 'px', color: 'grey' });
+		this.add(this.text, true);
     this.setDepth(this.depth);
     this.setVisible(true);
+  }
+
+  onEvent(event: Events) {
+    if (event == Events.CURVE_VALID) {
+    }
+    if (event == Events.CURVE_INVALID) {
+    }
+    if (event == Events.NODE_SELECTED) {
+      this.text.setTint(Constants.SECONDARY_COLOR);
+    }
+    if (event == Events.NODE_DESELECTED) {
+      this.text.setTint(Constants.PRIMARY_COLOR);
+    }
   }
 }

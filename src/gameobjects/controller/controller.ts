@@ -60,8 +60,13 @@ export class Controller
       "controlPointCenter"
     );
     this.setDepth(this.depth);
-    this.setVisible(false);
+		this._setVisible(false);
   }
+
+	_setVisible(value: boolean){
+    this.setVisible(value);
+		this.controllerCenter.setVisible(true);
+	}
 
   onDrag(
     handle: "rightControllerHandle" | "leftControllerHandle",
@@ -93,10 +98,10 @@ export class Controller
       this.valid = false;
     }
     if (event == Events.NODE_SELECTED) {
-      this.setVisible(true);
+      this._setVisible(true);
     }
     if (event == Events.NODE_DESELECTED) {
-      this.setVisible(false);
+      this._setVisible(false);
     }
   }
 }

@@ -5,6 +5,7 @@ import { GraphSelection } from "../graph/graph-selection";
 import { Edge } from "../graph/graphobjects/edge";
 import { Node } from "../graph/graphobjects/node";
 import { Events } from "../events";
+import { Constants } from "../constants";
 
 export class MainScene extends Phaser.Scene {
   graph: Graph = Graph.getInstance();
@@ -42,8 +43,9 @@ export class MainScene extends Phaser.Scene {
 	setUpCamera(): void {
 		// camera pan
 		const camera = this.cameras.main;
-		this.input.on("pointermove", function (pointer: any) {
+		this.input.on("pointermove", function (pointer: any, currentlyOver: any) {
 			if (!pointer.isDown) return;
+			if (currentlyOver.length != 0) return;
 			camera.scrollX -= (pointer.x - pointer.prevPosition.x) / camera.zoom;
 			camera.scrollY -= (pointer.y - pointer.prevPosition.y) / camera.zoom;
 		});
@@ -74,8 +76,8 @@ export class MainScene extends Phaser.Scene {
 			if(attrs.nodetype == "CURATED_NOTE"){
 				nodeBuilder.build({
 					name: node, 
-					x: attrs.x * 10,
-					y: attrs.y * 10,
+					x: attrs.x * Constants.GRAPH_XY_SCALING_FACTOR,
+					y: attrs.y * Constants.GRAPH_XY_SCALING_FACTOR,
 					size: attrs.size,
 					title: attrs.title,
 					fullpath: attrs.fullpath
