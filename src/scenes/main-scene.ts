@@ -6,6 +6,7 @@ import { Edge } from "../graph/graphobjects/edge";
 import { Node } from "../graph/graphobjects/node";
 import { Events } from "../events";
 import { Constants } from "../constants";
+import { bfsFromNode } from 'graphology-traversal/bfs';
 
 export class MainScene extends Phaser.Scene {
   graph: Graph = Graph.getInstance();
@@ -80,9 +81,12 @@ export class MainScene extends Phaser.Scene {
 	// build graph objects from data loaded in graph
   buildGraph() {
 		const nodeBuilder = new NodeBuilder(this);
-		this.graph.forEachNode((node, attrs) => {
-			console.log(node, attrs);
-			if(attrs.nodetype == "CURATED_NOTE"){
+
+		let nodesON: Set<string> = new Set();
+
+		// 8e647c20-f951-11ec-9dfd-b9c8db686024 Love
+		bfsFromNode(this.graph, '8e647c20-f951-11ec-9dfd-b9c8db686024', function(node, attrs, depth){
+			if(depth <= 3 && attrs.nodetype == "CURATED_NOTE"){
 				nodeBuilder.build({
 					name: node, 
 					x: attrs.x * Constants.GRAPH_XY_SCALING_FACTOR,
@@ -92,12 +96,15 @@ export class MainScene extends Phaser.Scene {
 					fullpath: attrs.fullpath,
 					banana: ('banana' in attrs) ? attrs.banana : false
 				});
+				nodesON.add(node)
 			}
 		});
 
 		const edgeBuilder = new EdgeBuilder(this);
 		this.graph.forEachEdge((edge, attrs, source, target, sourceAttrs, targetAttrs) => {
-			if(sourceAttrs.nodetype == "CURATED_NOTE" && targetAttrs.nodetype == "CURATED_NOTE"){
+			if(sourceAttrs.nodetype == "CURATED_NOTE" && targetAttrs.nodetype == "CURATED_NOTE"
+				 && nodesON.has(source) && nodesON.has(target)
+				){
 				edgeBuilder.build({
 					name: edge, 
 					firstNode: sourceAttrs[this.graph.NODE], 
