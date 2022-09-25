@@ -40,6 +40,14 @@ enum EMOJIS {
 	STAR = "star"
 }
 
+const SHOW_EMOJIS =  {
+	BANANA : true,
+	IDEA : true,
+	WIP : true,
+	REFERENCE : true,
+	STAR : true,
+}
+
 export class TextDisplay
   extends GameObjectWithTextDisplayTypes
   implements GameObjectOnGraph
@@ -94,7 +102,10 @@ export class TextDisplay
 					emojiSprite.scale = 0.6;
 				}
 				emojiSprite.depth = this.depth - 1;
-				this.add(emojiSprite, true);
+				// @ts-ignore
+				if ( SHOW_EMOJIS[emoji] ) {
+					this.add(emojiSprite, true);
+				}
 			}
 		});
 
