@@ -84,9 +84,14 @@ export class MainScene extends Phaser.Scene {
 
 		let nodesON: Set<string> = new Set();
 
-		// 8e647c20-f951-11ec-9dfd-b9c8db686024 Love
-		bfsFromNode(this.graph, '8e647c20-f951-11ec-9dfd-b9c8db686024', function(node, attrs, depth){
-			if(depth <= 3 && attrs.nodetype == "CURATED_NOTE"){
+		// const bfsStartNode = 'd78e09c0-f951-11ec-9dfd-b9c8db686024'; const bfsDepth = 2; // Human Interactions
+		// const bfsStartNode = '8e647c20-f951-11ec-9dfd-b9c8db686024'; const bfsDepth = 4; // Love
+		// const bfsStartNode = '8e647c20-f951-11ec-9dfd-b9c8db686024'; const bfsDepth = 10; // Love
+		// 
+		// const bfsStartNode = '05ad5260-fe26-11ec-b5ec-07bd468d6d6e'; const bfsDepth = 10; // climate change
+		 /*
+		bfsFromNode(this.graph, bfsStartNode, function(node, attrs, depth){
+			if(depth <= bfsDepth && attrs.nodetype == "CURATED_NOTE"){
 				nodeBuilder.build({
 					name: node, 
 					x: attrs.x * Constants.GRAPH_XY_SCALING_FACTOR,
@@ -95,10 +100,37 @@ export class MainScene extends Phaser.Scene {
 					title: attrs.title,
 					fullpath: attrs.fullpath,
 					banana: ('banana' in attrs) ? attrs.banana : false
+					emojistring: ('emojistring' in attrs) ? attrs.emojistring : "",
 				});
 				nodesON.add(node)
 			}
-		});
+		});*/
+	this.graph.forEachNode((node, attrs) => {
+		if(attrs.nodetype == "CURATED_NOTE"){
+				nodeBuilder.build({
+					name: node, 
+					x: attrs.x * Constants.GRAPH_XY_SCALING_FACTOR,
+					y: attrs.y * Constants.GRAPH_XY_SCALING_FACTOR,
+					size: attrs.size,
+					title: attrs.title,
+					fullpath: attrs.fullpath,
+					emojistring: ('emojistring' in attrs) ? attrs.emojistring : "",
+				});
+				nodesON.add(node)
+		}
+		if(attrs.nodetype == "PERSON"){
+				nodeBuilder.build({
+					name: node, 
+					x: attrs.x * Constants.GRAPH_XY_SCALING_FACTOR,
+					y: attrs.y * Constants.GRAPH_XY_SCALING_FACTOR,
+					size: attrs.size,
+					title: attrs.title,
+					fullpath: attrs.fullpath,
+					emojistring: ('emojistring' in attrs) ? attrs.emojistring : "",
+				});
+				nodesON.add(node)
+		}
+	});
 
 		const edgeBuilder = new EdgeBuilder(this);
 		this.graph.forEachEdge((edge, attrs, source, target, sourceAttrs, targetAttrs) => {

@@ -1320,6 +1320,14 @@
     "graphology-utils" "^2.4.1"
     "xml-writer" "^1.7.0"
 
+"graphology-indices@^0.17.0":
+  "integrity" "sha512-A7RXuKQvdqSWOpn7ZVQo4S33O0vCfPBnUSf7FwE0zNCasqwZVUaCXePuWo5HBpWw68KJcwObZDHpFk6HKH6MYQ=="
+  "resolved" "https://registry.npmjs.org/graphology-indices/-/graphology-indices-0.17.0.tgz"
+  "version" "0.17.0"
+  dependencies:
+    "graphology-utils" "^2.4.2"
+    "mnemonist" "^0.39.0"
+
 "graphology-operators@^1.5.0":
   "integrity" "sha512-VojhTwtKlGtbopHPzOmAsAgM8MJY1HScgAs3G8FobtI+xsSlnFSKQeuWIibXEg6/wwPHGYT2oxMJbgHcwAEr3Q=="
   "resolved" "https://registry.npmjs.org/graphology-operators/-/graphology-operators-1.5.1.tgz"
@@ -1327,12 +1335,20 @@
   dependencies:
     "graphology-utils" "^2.0.0"
 
+"graphology-traversal@^0.3.1":
+  "integrity" "sha512-lGLrLKEDKtNgAKgHVhVftKf3cb/nuWwuVPQZHXRnN90JWn0RSjco/s+NB2ARSlMapEMlbnPgv6j++427yTnU3Q=="
+  "resolved" "https://registry.npmjs.org/graphology-traversal/-/graphology-traversal-0.3.1.tgz"
+  "version" "0.3.1"
+  dependencies:
+    "graphology-indices" "^0.17.0"
+    "graphology-utils" "^2.0.0"
+
 "graphology-types@>=0.20.0", "graphology-types@>=0.23.0", "graphology-types@>=0.24.0":
   "integrity" "sha512-yn+NgOd/V8dWtHlxRlh0aEx3jp5IXSl8gsQPc3lYmJEZGg9C3oXlZIurHnn7FO3Xav55ehdD7OU7oznfgE2Wyg=="
   "resolved" "https://registry.npmjs.org/graphology-types/-/graphology-types-0.24.3.tgz"
   "version" "0.24.3"
 
-"graphology-utils@^2.0.0", "graphology-utils@^2.4.1":
+"graphology-utils@^2.0.0", "graphology-utils@^2.4.1", "graphology-utils@^2.4.2":
   "integrity" "sha512-ckHg8MXrXJkOARk56ZaSCM1g1Wihe2d6iTmz1enGOz4W/l831MBCKSayeFQfowgF8wd+PQ4rlch/56Vs/VZLDQ=="
   "resolved" "https://registry.npmjs.org/graphology-utils/-/graphology-utils-2.5.2.tgz"
   "version" "2.5.2"
@@ -2040,6 +2056,13 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"mnemonist@^0.39.0":
+  "integrity" "sha512-n3ZCEosuMH03DVivZ9N0fcXPWiZrBLEdfSlEJ+S/mJxmk3zuo1ur0dj9URDczFyP1VS3wfiyKzqLLDXoPJ6rPA=="
+  "resolved" "https://registry.npmjs.org/mnemonist/-/mnemonist-0.39.2.tgz"
+  "version" "0.39.2"
+  dependencies:
+    "obliterator" "^2.0.1"
+
 "ms@^2.1.1":
   "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
@@ -2229,7 +2252,7 @@
   dependencies:
     "isobject" "^3.0.1"
 
-"obliterator@^2.0.2":
+"obliterator@^2.0.1", "obliterator@^2.0.2":
   "integrity" "sha512-g0TrA7SbUggROhDPK8cEu/qpItwH2LSKcNl4tlfBNT54XY+nOsqrs0Q68h1V9b3HOSpIWv15jb1lax2hAggdIg=="
   "resolved" "https://registry.npmjs.org/obliterator/-/obliterator-2.0.2.tgz"
   "version" "2.0.2"

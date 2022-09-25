@@ -20,7 +20,7 @@ export interface NodeAttributes {
 	size: number,
 	title: string,
 	fullpath: string,
-	banana: boolean
+	emojistring: string,
 }
 
 export class Node extends GraphSelectableObject {

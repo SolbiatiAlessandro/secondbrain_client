@@ -24,13 +24,29 @@ class GameObjectWithTextDisplayTypes extends GameObject {
   }
 }
 
+// copied from "~/Hacking/LOVECRM/v2_phaser/server/src/server/constants.ts"
+/*
+enum EMOJIS {
+	BANANA = "🍌",
+	IDEA = "🪴",
+	WIP = "🛠",
+	REFERENCE = "📚"
+}*/
+enum EMOJIS {
+	BANANA = "banana",
+	IDEA = "plant",
+	WIP = "wrench",
+	REFERENCE = "book",
+	STAR = "star"
+}
+
 export class TextDisplay
   extends GameObjectWithTextDisplayTypes
   implements GameObjectOnGraph
 {
 	text: Phaser.GameObjects.Text;
 
-  depth: number = 5;
+  depth: number = 6;
 
   pointerdown() {}
 
@@ -38,23 +54,50 @@ export class TextDisplay
 		public scene: MainScene,
 		public title: string,
 		public size: number,
-		public banana: boolean
+		public emojistring: string
 	){
 		super(scene);
 	}
 
   populate() {
 		console.log(this.size);
-		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() + 'px', color: 'grey' });
+		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() + 'px', color: 
+																						'grey' });
 		this.add(this.text, true);
     this.setDepth(this.depth + 1);
     this.setVisible(true);
-		if (this.banana) {
-			const bananaSprite = new Phaser.GameObjects.Sprite(this.scene, this.pointCenter.x + 10, this.pointCenter.y + 10, 'banana');
-			bananaSprite.scale = 0.2;
-			bananaSprite.depth = this.depth;
-			this.add(bananaSprite, true);
-		}
+
+		// emojistring = "|2,BANANA|2,IDEA|"
+		//
+		this.emojistring.split("|").forEach((value_emoji) => {
+			if (value_emoji != '') {
+				const emoji = value_emoji.split(",")[1];
+				const size = value_emoji.split(",")[0];
+				const imagename = Object.entries(EMOJIS).filter((nameval: any) => nameval[0] == emoji)[0][1]
+				const emojiSprite = new Phaser.GameObjects.Sprite(
+					this.scene, 
+					this.pointCenter.x + (Math.random() * 60 - 30), 
+					this.pointCenter.y + (Math.random() * 60 - 30), 
+					imagename
+				);
+				// how to do switch syntax
+				if (size == "1"){
+					emojiSprite.scale = 0.3;
+				}
+				else if(size == "2"){
+					emojiSprite.scale = 0.4;
+				}
+				else if(size == "3"){
+					emojiSprite.scale = 0.5;
+				}
+				else {
+					emojiSprite.scale = 0.6;
+				}
+				emojiSprite.depth = this.depth - 1;
+				this.add(emojiSprite, true);
+			}
+		});
+
   }
 
   onEvent(event: Events) {
