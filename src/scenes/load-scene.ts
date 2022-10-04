@@ -16,11 +16,23 @@ export class LoadScene extends Phaser.Scene {
     this.load.image("orange", "assets/orange.png");
     this.load.image("controlPoint", "assets/controlPoint.png");
     this.load.image("controlPointCenter", "assets/controlPointCenter.png");
+
+		/* how to add emoji
+		 * Server
+		 * 1. add to enum to constants.ts
+		 *
+		 * Client
+		 * 2. add to scenes/load-scene
+		 * 3. add images to assets folder
+		 * 4. add to enum in gameobjects/textdisplay/textdisplay.ts
+		 */
     this.load.image("banana", "assets/banana.png");
     this.load.image("star", "assets/star.png");
     this.load.image("plant", "assets/plant.png");
     this.load.image("wrench", "assets/wrench.png");
     this.load.image("book", "assets/book.png");
+    this.load.image("sleep", "assets/sleep.png");
+    this.load.image("eggbanana", "assets/eggbanana.png");
   }
 
   create(): void {

@@ -24,20 +24,23 @@ class GameObjectWithTextDisplayTypes extends GameObject {
   }
 }
 
-// copied from "~/Hacking/LOVECRM/v2_phaser/server/src/server/constants.ts"
-/*
-enum EMOJIS {
-	BANANA = "🍌",
-	IDEA = "🪴",
-	WIP = "🛠",
-	REFERENCE = "📚"
-}*/
-enum EMOJIS {
+/* how to add emoji
+ * Server
+ * 1. add to enum to constants.ts
+ *
+ * Client
+ * 2. add to scenes/load-scene
+ * 3. add images to assets folder
+ * 4. add to enum in gameobjects/textdisplay/textdisplay.ts
+ */
+enum EMOJIS { // maps encoded emoji string to asset name
 	BANANA = "banana",
 	IDEA = "plant",
 	WIP = "wrench",
 	REFERENCE = "book",
-	STAR = "star"
+	STAR = "star",
+	EGGBANANA = "eggbanana",
+	SLEEP = "sleep",
 }
 
 const SHOW_EMOJIS =  {
@@ -46,6 +49,8 @@ const SHOW_EMOJIS =  {
 	WIP : true,
 	REFERENCE : true,
 	STAR : true,
+	EGGBANANA: true,
+	SLEEP: true
 }
 
 export class TextDisplay
@@ -68,8 +73,7 @@ export class TextDisplay
 	}
 
   populate() {
-		console.log(this.size);
-		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x, this.pointCenter.y, this.title, { fontSize: this.size.toString() + 'px', color: 
+		this.text = new Phaser.GameObjects.Text(this.scene, this.pointCenter.x - (3 * this.title.length), this.pointCenter.y - 5, this.title, { fontSize: this.size.toString() + 'px', color: 
 																						'grey' });
 		this.add(this.text, true);
     this.setDepth(this.depth + 1);
