@@ -1,5 +1,7 @@
 # SecondBrain v2 Client
 
+how this looks like ![](https://github.com/SolbiatiAlessandro/secondbrain_server/blob/main/Screenshot%202022-11-14%20at%2011.45.56.png?raw=true)
+
 repurposed [old game repo](https://github.com/SolbiatiAlessandro/hacktorio) to be client of second brain
 
 ```
